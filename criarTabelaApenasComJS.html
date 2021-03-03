@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <h1>Tabela</h1>
+</head>
+
+<body>
+</body>
+
+<script>
+    class Pessoa {
+        constructor(id, nome, idade) {
+            this.id = id;
+            this.nome = nome;
+            this.idade = idade;
+        }
+    }
+
+    var dados =
+        [
+            new Pessoa(1, 'João Silva', 14),
+            new Pessoa(2, 'Maria Antonieta', 57)
+        ];
+
+    var table = document.createElement('table');
+    table.style = 'border-style:inset;';
+    adicionarCabecalho(table, '');
+    adicionarCabecalho(table, 'ID');
+    adicionarCabecalho(table, 'NOME');
+    adicionarCabecalho(table, 'IDADE');
+
+    dados.forEach(function (item, index) {
+        let pessoa = item;
+        linha = document.createElement('tr');
+        table.appendChild(document.createElement('tr'));
+        preencherColunas(table, pessoa);
+
+    });
+
+    document.body.appendChild(table); //adiciona a tabela no body da página
+
+
+    /**
+    * Preenche as colunas com os dados (BOTÃO, ID, NOME e IDADE)
+    **/
+    function preencherColunas(table, pessoa) {
+        let colunaComBotao = document.createElement('td');
+        colunaComBotao.appendChild(criarBotao(pessoa));
+        adicionarColuna(table, colunaComBotao);
+
+        let spanID = document.createElement("span");
+        spanID.textContent = pessoa.id;
+        adicionarColuna(table, spanID);
+
+        let spanNome = document.createElement("span");
+        spanNome.textContent = pessoa.nome;
+        adicionarColuna(table, spanNome);
+
+        let spanIdade = document.createElement("span");
+        spanIdade.textContent = pessoa.idade;
+        adicionarColuna(table, spanIdade);
+    }
+
+    /**
+     * Cria o botão com o ID da pessoa    
+     **/
+    function criarBotao(pessoa) {
+        let botao = document.createElement('button');
+        botao.id = 'botao' + pessoa.id;
+        botao.name = botao.id
+        botao.textContent = pessoa.id;
+        botao.onclick = () => alert('O id é: ' + pessoa.id);
+        return botao;
+    }
+
+    /**
+     * Adiciona uma nova coluna na tabela, recebendo o conteudo como parametro(span,button ... )
+     **/
+    function adicionarColuna(table, conteudo) {
+        let coluna = document.createElement('td');
+        coluna.appendChild(conteudo);
+        table.appendChild(coluna);
+    }
+    /**
+     * Adiciona um novo cabeçalho(th) na tabela, recebendo o titulo como parametro(ID,NOME,IDADE ...)
+     **/
+    function adicionarCabecalho(table, titulo) {
+        var cabecalho = document.createElement('th');
+        cabecalho.textContent = titulo;
+        table.appendChild(cabecalho);
+
+    }
+</script>
+
+</html>

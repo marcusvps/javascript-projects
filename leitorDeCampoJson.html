@@ -1,0 +1,58 @@
+<html>
+<head><meta charset="utf-8"/></head>
+<body>
+   
+    <div id="div1">
+        <span> Informe o arquivo a ser lido: </span>
+        <input type="file" id="file-selector" onchange="readText(event)">
+    </div>
+    --------------------------------
+    <div id="div2">
+    </div>
+</body>
+<script>
+
+
+
+async function readText(event) {
+  const file = event.target.files.item(0);
+  var reader = new FileReader();
+  var divComResultado = document.getElementById('div2');
+  if(file){
+    reader.readAsText(file);
+    reader.onload = (e) => {
+      let textFile = e.target.result;
+      let textSplit = textFile.split(';');
+      let jsonFile = [];
+      for(let i = 0; i < textSplit.length; i++){
+          textSplit[i] =  textSplit[i].trim();
+          if(textSplit[i] == ""){
+            textSplit.pop(i);
+          }else{
+            jsonFile[i] = JSON.parse(textSplit[i]);
+          }
+
+      }
+      divComResultado.innerHTML = "<br/>" 
+      var campos = jsonFile.map((e) => e.nomeCompleto); //alterar CPF pelo campoDesejado
+      var conteudoHTML = '';
+      var camposParaApresentacao = campos.map((campo) => conteudoHTML += (campo + ','));
+
+      divComResultado.innerHTML = conteudoHTML;
+      
+      
+      
+
+    };
+
+
+    reader.onprogress = (e) =>{
+      document.getElementById('div2').innerHTML = "<br/> ...Lendo arquivo .. <br/> "
+    }
+  }
+
+
+
+}
+</script>
+</html>
